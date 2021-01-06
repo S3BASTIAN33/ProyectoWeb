@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CoreController!{% endblock %}
+
+{% block body %}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+        <th>{{ knp_pagination_sortable(pagination, 'Hospital', 'a.id') }}</th>
+        
+        <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'Dirección', 'a.title') }}
+        </th>
+        <th{% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'Teléfono', ['a.date', 'a.time']) }}
+        </th>
+        <th>{{ knp_pagination_sortable(pagination, 'Ciudad', 'a.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'Ingresados', 'a.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'Enfermedad', 'a.id') }}</th>
+    </tr>
+
+    {# table body #}
+    {% for article in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <td>{{ article.Hospital }}</td>
+            <td>{{ article.direccion }}</td>
+            <td>{{ article.telefono }}</td>
+            <td>{{ article.Ciudad}}</td>
+            <td>{{ article.Ingresados}}</td>
+           <td>{{ article.enfermedad}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+{% endblock %}
